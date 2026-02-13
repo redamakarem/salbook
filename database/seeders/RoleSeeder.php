@@ -18,7 +18,10 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($roles as $name => $description) {
-            Role::firstOrCreate(['name' => $name], ['guard_name' => 'web']);
+            Role::firstOrCreate(
+                ['name' => $name],
+                ['guard_name' => config('auth.defaults.guard', 'web')]
+            );
         }
 
         $customerPermissions = [

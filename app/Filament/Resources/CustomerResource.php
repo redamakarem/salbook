@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers\AppointmentsRelationManager;
 use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -75,10 +74,6 @@ class CustomerResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('appointments_count')
-                    ->label('Bookings')
-                    ->counts('appointments')
-                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
@@ -113,7 +108,7 @@ class CustomerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AppointmentsRelationManager::class,
+            // AppointmentsRelationManager::class, // Uncomment when Appointment model is created
         ];
     }
 

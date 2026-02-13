@@ -19,7 +19,7 @@ class CustomerProfileController extends Controller
             ->where('tenant_id', $user->tenant_id)
             ->first();
 
-        if (!$customer) {
+        if (! $customer) {
             $customer = Customer::create([
                 'tenant_id' => $user->tenant_id,
                 'name' => $user->name,
@@ -55,7 +55,7 @@ class CustomerProfileController extends Controller
             ->where('tenant_id', $user->tenant_id)
             ->first();
 
-        if (!$customer) {
+        if (! $customer) {
             $customer = Customer::create([
                 'tenant_id' => $user->tenant_id,
                 'name' => $user->name,
@@ -74,40 +74,14 @@ class CustomerProfileController extends Controller
 
     public function bookings(Request $request): JsonResponse
     {
-        $user = $request->user();
-
-        $customer = Customer::where('email', $user->email)
-            ->where('tenant_id', $user->tenant_id)
-            ->first();
-
-        if (!$customer) {
-            return response()->json([
-                'bookings' => [],
-            ]);
-        }
-
-        $bookings = $customer->appointments()
-            ->with(['service', 'employee.user'])
-            ->orderBy('datetime', 'desc')
-            ->paginate(15);
-
+        // TODO: Implement when Appointment model is created in Phase 3
         return response()->json([
-            'bookings' => $bookings->map(function ($appointment) {
-                return [
-                    'id' => $appointment->id,
-                    'service' => $appointment->service?->name,
-                    'staff' => $appointment->employee?->user?->name,
-                    'datetime' => $appointment->datetime,
-                    'status' => $appointment->status,
-                    'notes' => $appointment->notes,
-                    'deposit_amount' => $appointment->deposit_amount,
-                ];
-            }),
+            'bookings' => [],
             'meta' => [
-                'current_page' => $bookings->currentPage(),
-                'last_page' => $bookings->lastPage(),
-                'per_page' => $bookings->perPage(),
-                'total' => $bookings->total(),
+                'current_page' => 1,
+                'last_page' => 1,
+                'per_page' => 15,
+                'total' => 0,
             ],
         ]);
     }

@@ -10,7 +10,7 @@ class ShieldSeeder extends Seeder
 {
     public function run(): void
     {
-        $resources = ['tenant', 'user', 'customer', 'role'];
+        $resources = ['tenant', 'user', 'customer', 'role', 'permission'];
 
         $prefixes = [
             'view',

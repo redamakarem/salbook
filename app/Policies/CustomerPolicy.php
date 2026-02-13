@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CustomerPolicy
@@ -12,51 +12,61 @@ class CustomerPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->can('customer_view_any');
+        return $user->can('view_any_customer');
     }
 
     public function view(User $user, Customer $customer): bool
     {
-        return $user->can('customer_view') && $user->tenant_id === $customer->tenant_id;
+        return $user->can('view_customer');
     }
 
     public function create(User $user): bool
     {
-        return $user->can('customer_create');
+        return $user->can('create_customer');
     }
 
     public function update(User $user, Customer $customer): bool
     {
-        return $user->can('customer_update') && $user->tenant_id === $customer->tenant_id;
+        return $user->can('update_customer');
     }
 
     public function delete(User $user, Customer $customer): bool
     {
-        return $user->can('customer_delete') && $user->tenant_id === $customer->tenant_id;
+        return $user->can('delete_customer');
     }
 
     public function deleteAny(User $user): bool
     {
-        return $user->can('customer_delete');
+        return $user->can('delete_any_customer');
     }
 
     public function restore(User $user, Customer $customer): bool
     {
-        return $user->can('customer_restore') && $user->tenant_id === $customer->tenant_id;
+        return $user->can('restore_customer');
     }
 
     public function restoreAny(User $user): bool
     {
-        return $user->can('customer_restore');
+        return $user->can('restore_any_customer');
     }
 
     public function forceDelete(User $user, Customer $customer): bool
     {
-        return $user->can('customer_force_delete') && $user->tenant_id === $customer->tenant_id;
+        return $user->can('force_delete_customer');
     }
 
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('customer_force_delete');
+        return $user->can('force_delete_any_customer');
+    }
+
+    public function replicate(User $user, Customer $customer): bool
+    {
+        return $user->can('replicate_customer');
+    }
+
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_customer');
     }
 }
